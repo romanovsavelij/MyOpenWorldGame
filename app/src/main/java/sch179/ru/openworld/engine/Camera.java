@@ -48,10 +48,12 @@ public class Camera {
 
     }
 
+    //lol
+
     public void turn(float x, float y) {
         yaw += x;
         pitch += y;
-        Log.d("pitch", pitch);
+       // Log.d("pitch", pitch);
     }
 
     public float[] getViewMatrix() {
