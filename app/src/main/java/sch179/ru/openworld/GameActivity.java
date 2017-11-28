@@ -124,13 +124,15 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             float x = motionEvent.getX();
             float y = motionEvent.getY();
             if (xold != -1 && yold != -1) {
-                x -= xold;
-                y -= yold;
+                float deltax = x - xold;
+                float deltay = y - yold;
                 float speed = 1f;
-                x *= speed;
-                y *= speed;
-                camera.turn(x, y);
+                deltax *= speed;
+                deltay *= speed;
+                camera.turn(deltax, deltay);
             }
+            xold = x;
+            yold = y;
         }
         return true;
     }

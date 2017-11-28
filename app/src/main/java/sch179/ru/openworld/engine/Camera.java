@@ -14,27 +14,27 @@ public class Camera {
 
 
     public void TopButtonPressed(float s) {
-        position.y -= Math.sin(pitch);
+        position.y -= s * Math.sin(pitch);
         float pr = (float) Math.cos(pitch);
-        position.x += (float) pr * Math.sin(yaw);
-        position.z -= (float) pr * Math.cos(yaw);
+        position.x += pr * Math.sin(yaw);
+        position.z -= pr * Math.cos(yaw);
     }
 
     public void RightButtonPressed(float s) {
-        position.x += Math.sin(yaw);
-        position.z += Math.cos(yaw);
+        position.x += s * Math.cos(yaw);
+        position.z += s * Math.sin(yaw);
     }
 
     public void LeftButtonPressed(float s) {
-        position.x -= Math.sin(yaw);
-        position.z -= Math.cos(yaw);
+        position.x -= s * Math.cos(yaw);
+        position.z -= s * Math.sin(yaw);
     }
 
     public void BottomButtonPressed(float s) {
-        position.y += Math.sin(pitch);
+        position.y += s * Math.sin(pitch);
         float pr = (float) Math.cos(pitch);
-        position.x -= (float) pr * Math.sin(yaw);
-        position.z += (float) pr * Math.cos(yaw);
+        position.x -= pr * Math.sin(yaw);
+        position.z += pr * Math.cos(yaw);
 
     }
 
@@ -48,24 +48,15 @@ public class Camera {
 
     }
 
-    //lol
-
     public void turn(float x, float y) {
         yaw += x;
         pitch += y;
-       // Log.d("pitch", pitch);
     }
 
     public float[] getViewMatrix() {
-
         Matrix.setIdentityM(viewMatrix, 0);
-        /*float dist = 100f;
-        float CentX = (float) (position.x + dist * Math.cos(yaw) * Math.cos(pitch));
-        float CentY = (float) (position.y + dist * Math.sin(pitch));
-        float CentZ = (float) (position.z + dist * Math.cos(pitch) * Math.sin(yaw));*/
-        //Matrix.setLookAtM(viewMatrix, 0, position.x, position.y, position.z, dist * CentX, dist * CentY, dist * CentZ, 0f, 1f, 0f);
         Matrix.rotateM(viewMatrix, 0, pitch, 1f, 0f, 0f);
-        //Matrix.rotateM(viewMatrix, 0, yaw, 1f, 0f, 0f);
+        Matrix.rotateM(viewMatrix, 0, yaw, 0f, 1f, 0f);
         Matrix.translateM(viewMatrix, 0, position.x, position.y, position.z);
         return viewMatrix;
     }
