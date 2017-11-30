@@ -87,30 +87,22 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
 
     @Override
     public void onDrawFrame(GL10 glUnused) {
-
         generateScareenMatrix();
-
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT | GLES30.GL_DEPTH_BUFFER_BIT);
         GLES30.glClearColor(0f, 1f, 1f, 0f);
-
         if (!loaded) {
             land = new LandscapeModel(-1f, -1, GameUtils.loadTexture(R.drawable.grass), GameUtils.loadBitmap(R.drawable.hmap), loadManager);
             tree = loadManager.loadObjModel("tree.obj");
             tree.setTextureId(GameUtils.loadTexture(R.drawable.tree));
             positions = land.getObjects();
-            Log.d("HAHHA", positions.size() + "");
             loaded = true;
         }
-
         float[] tmp = new float[16];
         Matrix.setIdentityM(tmp, 0);
-        GameUtils.Vector3f pos = positions.get(0).getPosition();;
-        Log.d("ha", pos.x + " " + pos.y + " " + pos.z);
+        GameUtils.Vector3f pos = positions.get(0).getPosition();
         Matrix.translateM(tmp, 0, 0, 0, 0);
         Matrix.scaleM(tmp, 0, 10, 10, 10);
-
         defaultRenderer.renderModel(tree, tmp, screenMatrix);
-
         landscapeRenderer.renderModel(land.getModel(), land.getTransformationMatrix(), screenMatrix);
         defaultRenderer.renderModels(tree, positions, screenMatrix);
     }
