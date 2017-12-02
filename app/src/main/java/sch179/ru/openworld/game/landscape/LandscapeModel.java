@@ -89,7 +89,7 @@ public class LandscapeModel {
 				vertices[vertexPointer * 3 + 1] = getHeight(j, i, im);
 				heights[i][j] = vertices[vertexPointer * 3 + 1];
 				vertices[vertexPointer * 3 + 2] = (float) i / ((float) VERTEX_COUNT - 1) * SIZE;
-				if (objects.size() < 400 && random.nextInt() % 250 == 0) {
+				if (objects.size() < 400 && random.nextInt() % 5000 == 0) {
 					objects.add(new Transformation(new GameUtils.Vector3f(vertices[vertexPointer * 3] + x,
 							vertices[vertexPointer * 3 + 1], vertices[vertexPointer * 3 + 2] + y),
 							new GameUtils.Vector3f(0, 0, 0), 10));

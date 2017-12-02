@@ -23,7 +23,7 @@ void main() {
     if (texture_color.a < 0.5)
         discard;
 
-    calcDiffuseColor(0.1f);
+    calcDiffuseColor(0.7f);
 
     gl_FragColor = diffuseLight * texture_color;
 }

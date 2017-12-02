@@ -17,6 +17,6 @@ void calcDiffuseColor(float ambient) {
 }
 
 void main() {
-    calcDiffuseColor(0.1f);
+    calcDiffuseColor(0.7f);
     gl_FragColor = diffuseLight * texture2D(modelTexture, textureCoord);
 }

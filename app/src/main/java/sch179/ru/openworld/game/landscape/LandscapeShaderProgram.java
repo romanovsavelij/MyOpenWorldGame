@@ -30,6 +30,7 @@ public class LandscapeShaderProgram extends ShaderProgram {
         location_transformationMatrix = super.getUniformLocation("transformationMatrix");
         location_lightColor = super.getUniformLocation("lightColor");
         location_toLightVector = super.getUniformLocation("toLightVector");
+        System.out.println();
     }
 
     @Override

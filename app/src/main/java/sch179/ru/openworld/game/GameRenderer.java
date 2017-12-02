@@ -88,7 +88,7 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
         Matrix.setIdentityM(transformation, 0);
         Matrix.translateM(transformation, 0, pos.x, land.getH((int)(Math.abs(pos.x) / 512f) * land.getVertexCount(), (int)(Math.abs(pos.z) / 512f)) * land.getVertexCount(), pos.z);
         Matrix.scaleM(transformation, 0, 0.5f, 0.5f, 0.5f);
-        System.out.println(pos.x + " " + pos.y + " " + pos.z);
+       // System.out.println(pos.x + " " + pos.y + " " + pos.z);
         defaultRenderer.renderModel(dragon, transformation, screenMatrix);
     }
 
@@ -113,11 +113,10 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
         float[] tmp = new float[16];
         Matrix.setIdentityM(tmp, 0);
         GameUtils.Vector3f pos = positions.get(0).getPosition();
-        Matrix.translateM(tmp, 0, 0, 0, 0);
-        Matrix.scaleM(tmp, 0, 10, 10, 10);
+        Matrix.translateM(tmp, 0, pos.x, pos.y, pos.z);
+        Matrix.scaleM(tmp, 0, 20, 20, 20);
         landscapeRenderer.setLight(light);
         defaultRenderer.setLight(light);
-        //defaultRenderer.renderModel(tree, tmp, screenMatrix);
         landscapeRenderer.renderModel(land.getModel(), land.getTransformationMatrix(), screenMatrix);
         defaultRenderer.renderModels(tree, positions, screenMatrix);
 

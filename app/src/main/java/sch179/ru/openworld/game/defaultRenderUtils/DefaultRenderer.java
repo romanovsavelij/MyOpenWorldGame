@@ -11,6 +11,7 @@ import java.util.List;
 import sch179.ru.openworld.engine.Light;
 import sch179.ru.openworld.engine.Model;
 import sch179.ru.openworld.engine.Transformation;
+import sch179.ru.openworld.utils.GameUtils;
 
 public class DefaultRenderer {
 
@@ -68,7 +69,7 @@ public class DefaultRenderer {
         if (model.getTransperancy()) {
             GLES30.glDisable(GLES30.GL_CULL_FACE);
         }
-        float[] finalMatrix = new float[16];
+
         shader.start();
         shader.loadLight(light);
 
@@ -83,7 +84,14 @@ public class DefaultRenderer {
 
         for (Transformation transformation : transformations) {
 
-            Matrix.multiplyMM(finalMatrix, 0, screenMatrix, 0, transformation.getTransformationMatrix(), 0);
+            float[] tmp = new float[16];
+            float[] finalMatrix = new float[16];
+            Matrix.setIdentityM(tmp, 0);
+            GameUtils.Vector3f pos = transformation.getPosition();
+            Matrix.translateM(tmp, 0, pos.x, pos.y, pos.z);
+            Matrix.scaleM(tmp, 0, 5, 5, 5);
+            Matrix.multiplyMM(finalMatrix, 0, screenMatrix, 0, tmp, 0);
+
             shader.loadTransformationMatrix(finalMatrix);
             GLES30.glDrawElements(GLES30.GL_TRIANGLES, model.getVertexCount(), GLES30.GL_UNSIGNED_INT, 0);
 
@@ -105,6 +113,8 @@ public class DefaultRenderer {
         }
 
     }
+
+
 
 
 
