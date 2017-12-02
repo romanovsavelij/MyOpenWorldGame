@@ -65,9 +65,15 @@ public class LandscapeModel {
 		return objects;
 	}
 
+	private int VERTEX_COUNT;
+
+	public int getVertexCount() {
+		return VERTEX_COUNT;
+	}
+
 	private Model generateLandscape(Bitmap im, LoadManager loader) {
 
-		int VERTEX_COUNT = im.getHeight();
+		VERTEX_COUNT = im.getHeight();
 
 		int count = VERTEX_COUNT * VERTEX_COUNT;
 		float[] vertices = new float[count * 3];
