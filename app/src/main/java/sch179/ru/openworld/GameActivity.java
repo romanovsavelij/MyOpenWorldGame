@@ -129,7 +129,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 float speed = 1f;
                 deltax *= speed;
                 deltay *= speed;
-                camera.turn(deltax, deltay);
+                camera.turn(deltax / 5.0f, deltay / 5.0f);
             }
             xold = x;
             yold = y;

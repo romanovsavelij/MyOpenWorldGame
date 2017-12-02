@@ -14,8 +14,9 @@ import sch179.ru.openworld.utils.GameUtils;
 
 public class LandscapeModel {
 
-	private static float SIZE = 1024;
+	private static float SIZE = 512;
 	private float[] transformationMatrix = new float[16];
+	float[][] heights;
 
 	private float x;
 	private float y;
@@ -38,6 +39,10 @@ public class LandscapeModel {
 		Matrix.translateM(transformationMatrix, 0, x, 0f, y);
 		Matrix.scaleM(transformationMatrix, 0, 1f, 1f, 1f);
 
+	}
+
+	public float getH(int i, int j) {
+		return heights[i][j];
 	}
 
 	public float[] getTransformationMatrix() {
@@ -71,10 +76,12 @@ public class LandscapeModel {
 		int[] indices = new int[6 * (VERTEX_COUNT - 1) * (VERTEX_COUNT - 1)];
 		int vertexPointer = 0;
 		Random random = new Random();
+		heights = new float[VERTEX_COUNT][VERTEX_COUNT];
 		for (int i = 0; i < VERTEX_COUNT; i++) {
 			for (int j = 0; j < VERTEX_COUNT; j++) {
 				vertices[vertexPointer * 3] = (float) j / ((float) VERTEX_COUNT - 1) * SIZE;
 				vertices[vertexPointer * 3 + 1] = getHeight(j, i, im);
+				heights[i][j] = vertices[vertexPointer * 3 + 1];
 				vertices[vertexPointer * 3 + 2] = (float) i / ((float) VERTEX_COUNT - 1) * SIZE;
 				if (objects.size() < 400 && random.nextInt() % 250 == 0) {
 					objects.add(new Transformation(new GameUtils.Vector3f(vertices[vertexPointer * 3] + x,
@@ -123,7 +130,7 @@ public class LandscapeModel {
 		if (i < 0 || i >= im.getHeight() || j < 0 || j >= im.getHeight())
 			return 0;
 		int rgba = im.getPixel(i, j);
-		float MAXH = 60.0f;
+		float MAXH = 20.0f;
 		int MAXC = 256 * 256 * 256;
 		return ((float) rgba + (float) MAXC / 2.0f) / (MAXC / 2.0f) * MAXH;
 

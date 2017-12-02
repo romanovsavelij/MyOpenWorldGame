@@ -1,8 +1,6 @@
 package sch179.ru.openworld.engine;
 
 import android.opengl.Matrix;
-import android.renderscript.Matrix4f;
-import android.util.Log;
 
 import sch179.ru.openworld.utils.GameUtils;
 
@@ -12,6 +10,9 @@ public class Camera {
     private float[] viewMatrix = new float[16];
     private float yaw = 0f, pitch = 0f;
 
+    public GameUtils.Vector3f getPosition() {
+        return position;
+    }
 
     public void TopButtonPressed(float s) {
         position.y -= s * Math.sin(pitch);

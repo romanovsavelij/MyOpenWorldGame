@@ -36,8 +36,6 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
         defaultRenderer = new DefaultRenderer();
         landscapeRenderer = new LandscapeRenderer();
-        landscapeRenderer.setLight(light);
-        defaultRenderer.setLight(light);
         loadManager = new LoadManager();
         GLES30.glEnable(GLES30.GL_DEPTH_TEST);
         enableOptimizations();
@@ -60,13 +58,13 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
         final float right = ratio;
         final float bottom = -1.0f;
         final float top = 1.0f;
-        final float near = 1f;
-        final float far = 2048.0f;
+        final float near = 4f;
+        final float far = 512.0f;
         Matrix.frustumM(projectionMatrix, 0, left, right, bottom, top, near, far);
     }
 
     LandscapeModel land;
-    Model tree;
+    Model tree, dragon;
     List<Transformation> positions;
 
 
@@ -80,9 +78,18 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
                 screenMatrix[i] = projectionMatrix[i];
             return;
         }
-
         Matrix.multiplyMM(screenMatrix, 0, projectionMatrix, 0, camera.getViewMatrix(), 0);
+    }
 
+/// CHANGED
+    private void renderPlayer() {
+        GameUtils.Vector3f pos = camera.getPosition();
+        float[] transformation = new float[16];
+        Matrix.setIdentityM(transformation, 0);
+        Matrix.translateM(transformation, 0, pos.x, land.getH((int)(Math.abs(pos.x) / 512f), (int)(Math.abs(pos.z) / 512f)), pos.z);
+        Matrix.scaleM(transformation, 0, 0.5f, 0.5f, 0.5f);
+        System.out.println(pos.x + " " + pos.y + " " + pos.z);
+        defaultRenderer.renderModel(dragon, transformation, screenMatrix);
     }
 
     @Override
@@ -91,6 +98,8 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT | GLES30.GL_DEPTH_BUFFER_BIT);
         GLES30.glClearColor(0f, 1f, 1f, 0f);
         if (!loaded) {
+            dragon = new LoadManager().loadObjModel("dragon.obj");
+            dragon.setTextureId(GameUtils.loadTexture(R.drawable.white));
             land = new LandscapeModel(-1f, -1, GameUtils.loadTexture(R.drawable.grass), GameUtils.loadBitmap(R.drawable.hmap), loadManager);
             tree = loadManager.loadObjModel("tree.obj");
             tree.setTextureId(GameUtils.loadTexture(R.drawable.tree));
@@ -102,9 +111,16 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
         GameUtils.Vector3f pos = positions.get(0).getPosition();
         Matrix.translateM(tmp, 0, 0, 0, 0);
         Matrix.scaleM(tmp, 0, 10, 10, 10);
-        defaultRenderer.renderModel(tree, tmp, screenMatrix);
+        landscapeRenderer.setLight(light);
+        defaultRenderer.setLight(light);
+        //defaultRenderer.renderModel(tree, tmp, screenMatrix);
         landscapeRenderer.renderModel(land.getModel(), land.getTransformationMatrix(), screenMatrix);
         defaultRenderer.renderModels(tree, positions, screenMatrix);
+
+        renderPlayer();
+
+
+
     }
 
     public Camera getCamera() {
