@@ -30,7 +30,7 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
     private Light light = new Light(new GameUtils.Vector3f(512f, 1e4f, 512f), new GameUtils.Vector3f(0.3f, 0.3f, 0.3f));
     float[] projectionMatrix = new float[16];
 
-    Camera camera = new Camera();
+    Camera camera = new Camera(this);
 
     @Override
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {

@@ -72,12 +72,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         button = findViewById(R.id.buttonBottom);
         button.setOnClickListener(this);
         button.setTag("bottom");
-        button = findViewById(R.id.buttonUp);
-        button.setOnClickListener(this);
-        button.setTag("up");
-        button = findViewById(R.id.buttonDown);
-        button.setOnClickListener(this);
-        button.setTag("down");
     }
 
 
@@ -109,12 +103,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         }
         if (button.getTag() == "bottom") {
             camera.BottomButtonPressed(s);
-        }
-        if (button.getTag() == "up") {
-            camera.UpButtonPressed(s);
-        }
-        if (button.getTag() == "down") {
-            camera.DownButtonPressed(s);
         }
     }
 
