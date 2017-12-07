@@ -23,17 +23,22 @@ public class Camera {
 
     public void TopButtonPressed(float s) {
         positionPlayer.z += s;
+
     }
 
     public void RightButtonPressed(float s) {
         positionPlayer.x -= s;
+
     }
 
     public void LeftButtonPressed(float s) {
         positionPlayer.x += s;
+
     }
 
-    public void BottomButtonPressed(float s) { positionPlayer.z -= s; }
+    public void BottomButtonPressed(float s) {
+        positionPlayer.z -= s;
+    }
 
     public void turn(float x, float y) {
         yaw += x;
@@ -41,6 +46,7 @@ public class Camera {
     }
 
     public float[] getViewMatrix() {
+        positionPlayer.y = gameRenderer.getHeight(positionPlayer.x / 512 * gameRenderer.land.getVertexCount(), positionPlayer.z / 512 * gameRenderer.land.getVertexCount());
         Matrix.setIdentityM(viewMatrix, 0);
         GameUtils.Vector3f positionCamera = null;
         positionCamera.y = (float) (positionPlayer.y + distantionToPlayer * Math.sin(pitch));

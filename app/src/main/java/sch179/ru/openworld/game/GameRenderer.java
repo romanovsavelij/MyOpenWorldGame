@@ -63,7 +63,7 @@ public class GameRenderer implements GLSurfaceView.Renderer  {
         Matrix.frustumM(projectionMatrix, 0, left, right, bottom, top, near, far);
     }
 
-    LandscapeModel land;
+    public LandscapeModel land;
     Model tree, dragon;
     List<Transformation> positions;
 

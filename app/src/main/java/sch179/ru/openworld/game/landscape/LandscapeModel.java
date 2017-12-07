@@ -2,11 +2,9 @@ package sch179.ru.openworld.game.landscape;
 
 import android.graphics.Bitmap;
 import android.opengl.Matrix;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import sch179.ru.openworld.engine.LoadManager;
 import sch179.ru.openworld.engine.Model;
 import sch179.ru.openworld.engine.Transformation;
